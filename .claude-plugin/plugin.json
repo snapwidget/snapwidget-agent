@@ -1,0 +1,26 @@
+{
+  "name": "snapwidget",
+  "displayName": "SnapWidget",
+  "version": "0.1.0",
+  "description": "Ask Claude to add your Instagram feed or your Google reviews to your website. It makes the widget and puts it on your site for you.",
+  "author": {
+    "name": "SnapWidget",
+    "url": "https://snapwidget.com"
+  },
+  "homepage": "https://snapwidget.com/ai-agents",
+  "documentationUrl": "https://snapwidget.com/docs/ai-agents",
+  "repository": "https://github.com/snapwidget/snapwidget-agent",
+  "license": "MIT",
+  "privacyPolicyUrl": "https://snapwidget.com/privacy",
+  "supportUrl": "https://snapwidget.com/docs",
+  "termsOfServiceUrl": "https://snapwidget.com/terms",
+  "keywords": [
+    "snapwidget",
+    "instagram-feed",
+    "social-media-widget",
+    "google-reviews",
+    "embed",
+    "website",
+    "mcp"
+  ]
+}

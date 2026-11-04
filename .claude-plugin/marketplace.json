@@ -1,0 +1,15 @@
+{
+  "name": "snapwidget",
+  "description": "Ask Claude to add your Instagram feed or your Google reviews to your website. It makes the widget and puts it on your site for you.",
+  "owner": {
+    "name": "SnapWidget",
+    "url": "https://snapwidget.com"
+  },
+  "plugins": [
+    {
+      "name": "snapwidget",
+      "source": "./",
+      "description": "Ask Claude to add your Instagram feed or your Google reviews to your website. It makes the widget and puts it on your site for you."
+    }
+  ]
+}

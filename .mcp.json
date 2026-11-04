@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "snapwidget": {
+      "type": "http",
+      "url": "https://snapwidget.com/mcp"
+    }
+  }
+}

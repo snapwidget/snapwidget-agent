@@ -1,0 +1,10 @@
+{
+  "name": "snapwidget",
+  "version": "0.1.0",
+  "description": "Ask Gemini to add your Instagram feed or your Google reviews to your website. It makes the widget and puts it on your site for you.",
+  "mcpServers": {
+    "snapwidget": {
+      "httpUrl": "https://snapwidget.com/mcp"
+    }
+  }
+}
