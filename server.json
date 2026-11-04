@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.snapwidget/snapwidget",
+  "title": "SnapWidget",
+  "description": "Ask your AI agent to add your Instagram feed or your Google reviews to your website.",
+  "version": "1.0.0",
+  "websiteUrl": "https://snapwidget.com/ai-agents",
+  "repository": {
+    "url": "https://github.com/snapwidget/snapwidget-agent",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://snapwidget.com/apple-touch-icon.png",
+      "mimeType": "image/png",
+      "sizes": ["180x180"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://snapwidget.com/mcp"
+    }
+  ]
+}
