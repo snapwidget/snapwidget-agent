@@ -23,7 +23,22 @@ Ask your AI agent to add your Instagram feed or your Google reviews to your webs
 gemini extensions install https://github.com/snapwidget/snapwidget-agent
 ```
 
-**Codex, Cursor and other agents that read skills**
+**Cursor**
+
+Add this to `~/.cursor/mcp.json`, then add the skill with `npx skills add snapwidget/snapwidget-agent`:
+
+```json
+{
+  "mcpServers": {
+    "snapwidget": {
+      "url": "https://snapwidget.com/mcp",
+      "auth": { "CLIENT_ID": "01a1a540-0cf2-7324-a610-d2c2e5248a53" }
+    }
+  }
+}
+```
+
+**Codex and other agents that read skills**
 
 ```
 npx skills add snapwidget/snapwidget-agent

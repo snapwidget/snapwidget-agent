@@ -7,13 +7,16 @@
   "websiteUrl": "https://snapwidget.com/ai-agents",
   "repository": {
     "url": "https://github.com/snapwidget/snapwidget-agent",
-    "source": "github"
+    "source": "github",
+    "id": "1445164094"
   },
   "icons": [
     {
       "src": "https://snapwidget.com/apple-touch-icon.png",
       "mimeType": "image/png",
-      "sizes": ["180x180"]
+      "sizes": [
+        "180x180"
+      ]
     }
   ],
   "remotes": [

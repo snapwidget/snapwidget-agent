@@ -1,7 +1,10 @@
 {
   "mcpServers": {
     "snapwidget": {
-      "url": "https://snapwidget.com/mcp"
+      "url": "https://snapwidget.com/mcp",
+      "auth": {
+        "CLIENT_ID": "01a1a540-0cf2-7324-a610-d2c2e5248a53"
+      }
     }
   }
 }
