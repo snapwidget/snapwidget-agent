@@ -27,7 +27,7 @@ test('react: the scripts load in useEffect, the iframe is JSX', () => {
   assert.match(code, /^'use client';/);
   assert.match(code, /const SCRIPTS = \[\{"src":"https:\/\/snapwidget\.com\/js\/snapwidget-lightbox\.js","id":""\},\{"src":"https:\/\/snapwidget\.com\/js\/snapwidget\.js","id":""\}\];/);
   assert.match(code, /<link rel="stylesheet" href="https:\/\/snapwidget\.com\/stylesheets\/snapwidget-lightbox\.css" \/>/);
-  assert.match(code, /<iframe src="https:\/\/snapwidget\.com\/embed\/123" className="snapwidget-widget" frameBorder="0" scrolling="no" style=\{\{ border: "none", overflow: "hidden", width: "100%" \}\} title="Posts from \\"Acme\\"" \/>/);
+  assert.match(code, /<iframe src="https:\/\/snapwidget\.com\/embed\/123" className="snapwidget-widget" frameBorder="0" scrolling="no" style=\{\{ border: "none", overflow: "hidden", width: "100%" \}\} title=\{"Posts from \\"Acme\\""\} \/>/);
   assert.doesNotMatch(code, /<script src|<\/script>/);
 });
 
@@ -36,6 +36,13 @@ test('next: next/script with the loader id', () => {
   assert.match(code, /import Script from 'next\/script';/);
   assert.match(code, /<div className="snapwidget-rpf" data-widget-id="123" \/>/);
   assert.match(code, /<Script id="snaprpf" src="https:\/\/snapwidget\.com\/js\/snapwidget-rpf\.js" strategy="afterInteractive" \/>/);
+});
+
+test('a name with a quote, a backslash, an ampersand or > stays valid JSX', () => {
+  const html = `<!-- SnapWidget -->\n<script src="${APP}/js/snapwidget.js"></script>\n<iframe src="${APP}/embed/1" class="snapwidget-widget" title="Reviews &quot;4&gt; stars&quot; \\ A&amp;B >"></iframe>`;
+  const code = convert(html.replace('&gt;', '>'), 'next');
+  assert.match(code, /title=\{"Reviews \\"4> stars\\" \\\\ A&B >"\}/);
+  assert.match(convert(RESPONSIVE.replace('Posts from &quot;Acme&quot;', 'Plain name'), 'react'), / title="Plain name" \/>/);
 });
 
 test('an unknown part or format fails instead of losing code', () => {

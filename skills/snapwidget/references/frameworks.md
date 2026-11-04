@@ -71,6 +71,10 @@ Astro bundles `<script>` tags unless they have `is:inline`. Add `is:inline` to e
 <!-- the iframe from the HTML code -->
 ```
 
+## Popup and banner widgets
+
+A popup or banner widget starts once, when the page loads. In a React, Next.js, Vue, Nuxt, Svelte or Astro site, put its code in the root layout (in Next.js, `app/layout.tsx`), so it starts when the site loads, as on any other site. In a page component, it does not start again when the visitor leaves the page and comes back.
+
 ## Size
 
 On a responsive widget, `snapwidget.js` sets the iframe's height to fit its posts. Keep the iframe's `style` and `class` as they are. To make the widget narrower, put it in a container with a `max-width`.

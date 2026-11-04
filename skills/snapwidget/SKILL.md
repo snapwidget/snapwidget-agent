@@ -50,7 +50,7 @@ Run `snapwidget embed <widget_id> --format <format>` (`get_embed_code` gives the
 - **Next.js:** `--format next`. Save it and render it in a page.
 - **Plain HTML and server templates** (PHP, Laravel Blade, Rails, Django, Jinja, Liquid, Hugo, Jekyll, Eleventy): `--format html`. Paste the code where the widget goes.
 - **Vue, Nuxt, Svelte, Astro:** read [references/frameworks.md](references/frameworks.md).
-- **A website builder** (WordPress, Wix, Squarespace, Shopify, Webflow and many more): `--format html`, then follow the builder's file in [references/](references/), for example [references/wordpress.md](references/wordpress.md). When you cannot edit the site, give the user the code and the steps.
+- **A website builder** (WordPress, Wix, Squarespace, Shopify, Webflow and many more): `--format html`, then follow the builder's guide. [references/index.md](references/index.md) lists them, for example [references/wordpress.md](references/wordpress.md). When you cannot edit the site, give the user the code and the steps.
 
 ### 5. Check it
 

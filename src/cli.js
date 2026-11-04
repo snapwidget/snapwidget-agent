@@ -1,11 +1,12 @@
 import { readFileSync } from 'node:fs';
-import { callTool, CliError, forgetToken, post, saveToken, VERSION } from './client.js';
+import { callTool, CliError, forgetToken, post, saveToken, tools, VERSION } from './client.js';
 import { COMMANDS } from './commands.js';
-import { convert } from './embed.js';
+import { convert, FORMATS } from './embed.js';
 import { login } from './login.js';
 
-// The tools of the MCP server, for --help and the option types (npm run tools makes the file).
-const TOOLS = Object.fromEntries(JSON.parse(readFileSync(new URL('./tools.json', import.meta.url))).map((tool) => [tool.name, tool]));
+// The tools of the MCP server when this version was made (npm run tools), for when the CLI cannot
+// read the server's own list (client.js tools()).
+const BUNDLED = JSON.parse(readFileSync(new URL('./tools.json', import.meta.url)));
 
 const OWN = [
   { name: 'signup', usage: 'signup --email <address>', text: 'Makes a new SnapWidget account. SnapWidget emails a 6-digit code to the address.' },
@@ -69,9 +70,12 @@ function coerce(name, value, schema = {}) {
     if (value === 'false') return false;
     fail('true or false');
   }
-  if (type === 'integer' || type === 'number') {
+  if (type === 'integer') {
+    return /^-?\d+$/.test(String(value).trim()) ? Number(value) : fail('a whole number');
+  }
+  if (type === 'number') {
     const number = Number(value);
-    return Number.isFinite(number) ? number : fail('a number');
+    return String(value).trim() !== '' && Number.isFinite(number) ? number : fail('a number');
   }
   if (type === 'array') {
     const values = Array.isArray(value) ? value : String(value).trim().startsWith('[') ? json(name, value) : String(value).split(',');
@@ -113,7 +117,7 @@ export function toolArguments(tool, positionalNames, positionals, options) {
   return args;
 }
 
-function mainHelp() {
+function mainHelp(TOOLS) {
   const lines = [
     `SnapWidget CLI ${VERSION}: add social media feeds and reviews to a website.`,
     '',
@@ -142,7 +146,7 @@ function mainHelp() {
   return lines.join('\n');
 }
 
-function commandHelp(command) {
+function commandHelp(command, TOOLS) {
   if (!command.tool) {
     return `Usage: snapwidget ${command.usage}\n\n${command.text}`;
   }
@@ -156,7 +160,7 @@ function commandHelp(command) {
   ];
   const options = Object.entries(schema.properties || {}).filter(([name]) => !positional.includes(name));
   if (command.tool === 'get_embed_code') {
-    options.push(['format', { type: 'string', enum: ['html', 'react', 'next'], description: 'The code for a plain HTML page or website builder (html, the default), a React component (react) or a Next.js component (next).' }]);
+    options.push(['format', { type: 'string', enum: FORMATS, description: 'The code for a plain HTML page or website builder (html, the default), a React component (react) or a Next.js component (next).' }]);
   }
   if (positional.length || options.length) {
     lines.push('', 'Arguments and options:');
@@ -175,7 +179,7 @@ const print = (value) => process.stdout.write(JSON.stringify(value, null, 2) + '
 
 async function signedIn(token) {
   const path = saveToken(token);
-  const account = await callTool('get_account', {});
+  const account = await callTool('get_account', {}, token);
   return { signed_in: true, email: account.email, plan: account.plan, trial_ends_at: account.trial_ends_at, saved_in: path };
 }
 
@@ -184,6 +188,7 @@ async function run(argv) {
     process.stdout.write(VERSION + '\n');
     return;
   }
+  const TOOLS = Object.fromEntries((await tools(BUNDLED)).map((tool) => [tool.name, tool]));
   const command = findCommand(argv);
   if (!command) {
     const words = argv.filter((arg) => !arg.startsWith('-')).join(' ');
@@ -195,24 +200,27 @@ async function run(argv) {
     if (argv.length && !['help', '--help', '-h'].includes(argv[0])) {
       throw new CliError(`Unknown command "${words}". Run "snapwidget --help" for the commands.`);
     }
-    process.stdout.write(mainHelp() + '\n');
+    process.stdout.write(mainHelp(TOOLS) + '\n');
     return;
   }
 
   const rest = argv.slice(command.name.split(' ').length);
-  const toolName = command.tool || (command.name === 'call' ? rest.find((arg) => !arg.startsWith('-')) : undefined);
+  // The boolean options of the command's tool; for "call", of every tool, as the tool name comes
+  // only out of the parse.
+  const booleansOf = (list) => list.flatMap((t) => Object.entries(t?.inputSchema?.properties || {}).filter(([, p]) => p.type === 'boolean').map(([name]) => name));
+  const { positionals, options } = parseArgs(rest, ['help', 'no_browser', ...booleansOf(command.name === 'call' ? Object.values(TOOLS) : [TOOLS[command.tool]])]);
+  const toolName = command.name === 'call' ? positionals[0] : command.tool;
   const tool = TOOLS[toolName];
-  const booleans = ['help', 'no_browser', ...Object.entries(tool?.inputSchema?.properties || {}).filter(([, p]) => p.type === 'boolean').map(([name]) => name)];
-  const { positionals, options } = parseArgs(rest, booleans);
   if (options.help) {
-    process.stdout.write(commandHelp(command) + '\n');
+    process.stdout.write(commandHelp(command, TOOLS) + '\n');
     return;
   }
 
   switch (command.name) {
     case 'signup': {
       const answer = await post('/api/v1/signup', { email: options.email });
-      print({ ...answer, next: `snapwidget verify --email ${answer.email} --code <6-digit code from the email>` });
+      // The server's text tells an API client to POST the code; the CLI has verify for that.
+      print({ ...answer, message: answer.message.replace(/ Ask the owner of the address .*$/, ' Ask the owner of the address for it.'), next: `snapwidget verify --email ${answer.email} --code <6-digit code from the email>` });
       return;
     }
     case 'verify': {
@@ -225,7 +233,9 @@ async function run(argv) {
       return;
     case 'logout':
       forgetToken();
-      print({ signed_out: true });
+      print(process.env.SNAPWIDGET_TOKEN
+        ? { signed_out: true, message: 'SNAPWIDGET_TOKEN is still set, so the commands still use that token until you unset it.' }
+        : { signed_out: true });
       return;
     case 'tools':
       print(Object.values(TOOLS).map((t) => ({ name: t.name, title: t.title, description: firstSentence(t.description) })));
@@ -239,6 +249,9 @@ async function run(argv) {
 
   if (command.tool === 'get_embed_code') {
     const format = options.format === undefined ? 'html' : String(options.format);
+    if (!FORMATS.includes(format)) {
+      throw new CliError(`Unknown format "${format}". Use ${FORMATS.join(', ')}.`);
+    }
     delete options.format;
     const answer = await callTool(command.tool, toolArguments(tool, command.args, positionals, options));
     print({ id: answer.id, format, code: convert(answer.embed_code, format), guides: answer.guides });

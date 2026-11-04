@@ -1,5 +1,7 @@
 import { CliError } from './client.js';
 
+export const FORMATS = ['html', 'react', 'next'];
+
 // The parts of a SnapWidget embed code (app/Services/EmbedCode.php): stylesheets, scripts (a
 // src, or the small loader of the popup and banner widgets), the popup and banner placeholder
 // divs, and the widget iframe.
@@ -8,7 +10,7 @@ const PARTS = [
   ['stylesheet', /<link rel="stylesheet" href="([^"]+)"\s*\/?>/y],
   ['script', /<script src="([^"]+)"><\/script>/y],
   ['loader', /<script>!function\(s,n,ap\)\{[\s\S]*?a\.src="([^"]+)"[\s\S]*?\}\(document,0,"([^"]+)"\);<\/script>/y],
-  ['element', /<(div|iframe) ([^>]*)><\/\1>/y],
+  ['element', /<(div|iframe)((?:\s+[\w-]+="[^"]*")*)\s*><\/\1>/y],
 ];
 
 export function parse(html) {
@@ -51,12 +53,16 @@ function styleObject(css) {
   return `{{ ${entries.join(', ')} }}`;
 }
 
+// A JSX string attribute has no escapes and reads "&...;" as a character: a value with a quote, a
+// backslash or an ampersand goes in braces.
+const jsxString = (value) => (/["\\&]/.test(value) ? `{${JSON.stringify(value)}}` : `"${value}"`);
+
 function jsxElement({ tag, attributes }) {
   // allowtransparency was for old Internet Explorer: React 19 warns about it, and "true" fails a
   // TypeScript build. An iframe is transparent without it.
   const props = attributes.filter(([name]) => name !== 'allowtransparency').map(([name, value]) => name === 'style'
     ? `style=${styleObject(value)}`
-    : `${JSX_NAMES[name] || name}=${JSON.stringify(value)}`);
+    : `${JSX_NAMES[name] || name}=${jsxString(value)}`);
   return `<${tag} ${props.join(' ')} />`;
 }
 
@@ -122,5 +128,5 @@ export function convert(html, format) {
   if (format === 'next') {
     return next(parse(html));
   }
-  throw new CliError(`Unknown format "${format}". Use html, react or next.`);
+  throw new CliError(`Unknown format "${format}". Use ${FORMATS.join(', ')}.`);
 }

@@ -38,7 +38,9 @@ test('tool arguments get the types of the tool schema', () => {
 
 test('a wrong option or value says what is right', () => {
   assert.throws(() => toolArguments(TOOLS.list_widgets, [], [], { nope: '1' }), /Unknown option --nope\. Options: --page, --per-page\./);
-  assert.throws(() => toolArguments(TOOLS.list_widgets, [], [], { per_page: 'ten' }), /--per-page needs a number/);
+  assert.throws(() => toolArguments(TOOLS.list_widgets, [], [], { per_page: 'ten' }), /--per-page needs a whole number/);
+  assert.throws(() => toolArguments(TOOLS.list_widgets, [], [], { per_page: '' }), /--per-page needs a whole number/);
+  assert.throws(() => toolArguments(TOOLS.get_widget_stats, [], [], { days: '1.5' }), /--days needs a whole number/);
   assert.throws(() => toolArguments(TOOLS.update_widget, ['widget_id'], ['w1'], { settings: '{bad' }), /--settings needs JSON/);
   assert.throws(() => toolArguments(TOOLS.get_widget, ['widget_id'], ['w1', 'w2'], {}), /Too many arguments: w2/);
 });

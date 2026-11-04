@@ -8,6 +8,7 @@ const OUT = new URL('../skills/snapwidget/references/', import.meta.url);
 const index = await (await fetch(`${DOCS}/llms.txt`)).text();
 const pages = [...new Set(index.match(/https:\/\/snapwidget\.com\/docs\/install\/[a-z0-9-]+\.md/g))].sort();
 
+const guides = [];
 for (const url of pages) {
   const text = await (await fetch(url)).text();
   // The docs put a "Documentation Index" note above each page.
@@ -19,6 +20,15 @@ Get the code with \`snapwidget embed <widget_id> --format html\` (the MCP tool g
 
 ${body}
 `);
+  guides.push(`- [${body.match(/^# (.+)$/m)[1]}](${slug}.md)`);
   console.log(slug);
 }
+
+// The list of the guides: an agent that reads the skill from a web address cannot list a folder.
+writeFileSync(new URL('index.md', OUT), `# Install guides
+
+Get the code with \`snapwidget embed <widget_id> --format html\` (the MCP tool get_embed_code), then follow the guide of the website builder. For React, Next.js, Vue, Nuxt, Svelte and Astro, read [frameworks.md](frameworks.md).
+
+${guides.join('\n')}
+`);
 console.log(`${pages.length} guides`);

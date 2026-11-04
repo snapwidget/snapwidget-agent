@@ -5,9 +5,10 @@ import { baseUrl, CliError, post, postForm } from './client.js';
 
 const base64url = (buffer) => buffer.toString('base64url');
 
+// On Windows not "cmd /c start": cmd reads the "&" in the link as the end of the command.
 function openBrowser(url) {
   const [command, args] = process.platform === 'darwin' ? ['open', [url]]
-    : process.platform === 'win32' ? ['cmd', ['/c', 'start', '', url]]
+    : process.platform === 'win32' ? ['rundll32', ['url.dll,FileProtocolHandler', url]]
       : ['xdg-open', [url]];
   try {
     spawn(command, args, { stdio: 'ignore', detached: true }).on('error', () => {}).unref();
