@@ -9,7 +9,9 @@
   },
   "annotations": {
    "title": "Get Account",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -35,7 +37,9 @@
   },
   "annotations": {
    "title": "Get Upgrade Link",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -48,7 +52,9 @@
   },
   "annotations": {
    "title": "List Invoices",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -61,7 +67,9 @@
   },
   "annotations": {
    "title": "List Accounts",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -92,7 +100,10 @@
    ]
   },
   "annotations": {
-   "title": "Connect Account"
+   "title": "Connect Account",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": true
   }
  },
  {
@@ -112,7 +123,10 @@
    ]
   },
   "annotations": {
-   "title": "Reconnect Account"
+   "title": "Reconnect Account",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -137,7 +151,9 @@
   },
   "annotations": {
    "title": "Remove Account",
-   "destructiveHint": true
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false
   }
  },
  {
@@ -150,7 +166,9 @@
   },
   "annotations": {
    "title": "List Widget Types",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -175,7 +193,9 @@
   },
   "annotations": {
    "title": "List Widgets",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -196,7 +216,9 @@
   },
   "annotations": {
    "title": "Get Widget",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -217,7 +239,9 @@
   },
   "annotations": {
    "title": "Get Embed Code",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -245,7 +269,9 @@
   },
   "annotations": {
    "title": "Get Widget Stats",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -295,13 +321,16 @@
    ]
   },
   "annotations": {
-   "title": "Create Widget"
+   "title": "Create Widget",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
   "name": "update_widget",
   "title": "Update Widget",
-  "description": "Changes a widget; send only what changes. A refused call changes nothing. A social widget: its name, layout, settings (the names in get_widget's settings; list_widget_types gives each setting's allowed values), its accounts (all of them, in order: the first, of the widget's service, gives the header) and its campaign (for the \"hashtag-campaign\" filter; a widget that leaves its campaign needs its accounts in the same call). A review widget: its name, layout, settings and review sources. The site shows a change within a few minutes; the embed code stays the same.",
+  "description": "Changes a widget; send only what changes. A refused call changes nothing. A social widget: its name, layout, settings (the names in get_widget's settings; list_widget_types gives each setting's allowed values), its accounts (all of them, in order: the first, of the widget's service, gives the header) and its campaign (for the \"hashtag-campaign\" filter; a widget that leaves its campaign needs its accounts in the same call). A review widget: its name, layout, settings and review sources. The site shows a change within a few minutes. embed_code_changed true (for example a new size of a widget with a fixed width and height) on a widget that is already on a site: give the user the new embed_code and the steps of get_embed_code to replace the code on the site.",
   "inputSchema": {
    "properties": {
     "widget_id": {
@@ -346,6 +375,9 @@
   },
   "annotations": {
    "title": "Update Widget",
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false,
    "idempotentHint": true
   }
  },
@@ -366,7 +398,10 @@
    ]
   },
   "annotations": {
-   "title": "Copy Widget"
+   "title": "Copy Widget",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -391,7 +426,9 @@
   },
   "annotations": {
    "title": "Delete Widget",
-   "destructiveHint": true
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false
   }
  },
  {
@@ -412,7 +449,9 @@
   },
   "annotations": {
    "title": "Preview Widget",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -437,7 +476,9 @@
   },
   "annotations": {
    "title": "List Widget Posts",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -503,6 +544,9 @@
   },
   "annotations": {
    "title": "Set Product Tags",
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false,
    "idempotentHint": true
   }
  },
@@ -528,7 +572,9 @@
   },
   "annotations": {
    "title": "Find Google Business",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": true
   }
  },
  {
@@ -565,7 +611,10 @@
    ]
   },
   "annotations": {
-   "title": "Add Review Source"
+   "title": "Add Review Source",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": true
   }
  },
  {
@@ -578,7 +627,9 @@
   },
   "annotations": {
    "title": "List Review Sources",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -610,7 +661,9 @@
   },
   "annotations": {
    "title": "Get Review Source",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -636,6 +689,9 @@
   },
   "annotations": {
    "title": "Update Review Source",
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false,
    "idempotentHint": true
   }
  },
@@ -656,7 +712,10 @@
    ]
   },
   "annotations": {
-   "title": "Sync Review Source"
+   "title": "Sync Review Source",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": true
   }
  },
  {
@@ -677,6 +736,9 @@
   },
   "annotations": {
    "title": "Approve Pending Reviews",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": false,
    "idempotentHint": true
   }
  },
@@ -702,7 +764,10 @@
    ]
   },
   "annotations": {
-   "title": "Import Reviews"
+   "title": "Import Reviews",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -784,7 +849,10 @@
    ]
   },
   "annotations": {
-   "title": "Add Review"
+   "title": "Add Review",
+   "readOnlyHint": false,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -881,6 +949,9 @@
   },
   "annotations": {
    "title": "Update Review",
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false,
    "idempotentHint": true
   }
  },
@@ -902,7 +973,9 @@
   },
   "annotations": {
    "title": "Delete Review",
-   "destructiveHint": true
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false
   }
  },
  {
@@ -923,7 +996,9 @@
   },
   "annotations": {
    "title": "Remove Review Source",
-   "destructiveHint": true
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false
   }
  },
  {
@@ -936,7 +1011,9 @@
   },
   "annotations": {
    "title": "List Campaigns",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -957,7 +1034,9 @@
   },
   "annotations": {
    "title": "Get Campaign",
-   "readOnlyHint": true
+   "readOnlyHint": true,
+   "destructiveHint": false,
+   "openWorldHint": false
   }
  },
  {
@@ -1002,7 +1081,10 @@
    "type": "object"
   },
   "annotations": {
-   "title": "Save Campaign"
+   "title": "Save Campaign",
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false
   }
  },
  {
@@ -1023,7 +1105,9 @@
   },
   "annotations": {
    "title": "Delete Campaign",
-   "destructiveHint": true
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false
   }
  },
  {
@@ -1049,7 +1133,9 @@
   },
   "annotations": {
    "title": "Remove Campaign Participant",
-   "destructiveHint": true
+   "readOnlyHint": false,
+   "destructiveHint": true,
+   "openWorldHint": false
   }
  }
 ]

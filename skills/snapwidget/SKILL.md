@@ -40,7 +40,7 @@ Run `snapwidget accounts list` (`list_accounts`) first: the account can be there
 - `snapwidget widgets types` (`list_widget_types`) lists the layouts and their settings.
 - Social posts: `snapwidget widgets create --layout grid --accounts <account_id>` (`create_widget`). More accounts: `--accounts 12,34`.
 - Reviews: `snapwidget widgets create --kind review --name "<name>" --layout wall --source-ids <source_id>`.
-- Change settings: `snapwidget widgets update <widget_id> --settings '{"<setting>": "<value>"}'` (`update_widget`). Send only what changes.
+- Change settings: `snapwidget widgets update <widget_id> --settings '{"<setting>": "<value>"}'` (`update_widget`). Send only what changes. When the answer has `"embed_code_changed": true` and the widget is already on a site, the site needs the new code: run `snapwidget embed <widget_id>` and replace the old code.
 
 ### 4. Put the widget on the site
 
