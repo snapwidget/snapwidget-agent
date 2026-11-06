@@ -2,10 +2,9 @@
 
 Ask your AI agent to add your Instagram feed or your Google reviews to your website. It makes the widget and puts it on your site for you.
 
-[SnapWidget](https://snapwidget.com) works with your Instagram, Facebook, TikTok, X and YouTube accounts, your Google and G2 reviews, and your testimonials. This repository has three parts:
+[SnapWidget](https://snapwidget.com) works with your Instagram, Facebook, TikTok, X and YouTube accounts, your Google and G2 reviews, and your testimonials. This repository has two parts:
 
 - **A skill** (`skills/snapwidget/SKILL.md`) that tells the agent how to make a widget and add it to a site, with the steps for WordPress, Wix, Shopify, Squarespace, many other website builders and the JavaScript frameworks.
-- **The `snapwidget` CLI**, for agents that work in a terminal.
 - **Plugin files** for Claude Code and Gemini CLI, with the skill and the SnapWidget MCP server.
 
 ## Install
@@ -58,17 +57,13 @@ The first time, the agent signs you in. With a new account, you type in the code
 
 ## The CLI
 
+For agents that work in a terminal:
+
 ```
 npm install -g snapwidget
-snapwidget login                     # an existing account: sign in in the browser
-snapwidget signup --email you@example.com
-snapwidget verify --email you@example.com --code 123456
-snapwidget widgets list
-snapwidget embed <widget_id> --format next
-snapwidget --help
 ```
 
-Every command prints JSON, and `snapwidget <command> --help` shows its options. The CLI keeps the sign-in in `~/.config/snapwidget/config.json`. `SNAPWIDGET_TOKEN` sends a token in place of the saved sign-in.
+The commands and the code are in [snapwidget/snapwidget-cli](https://github.com/snapwidget/snapwidget-cli).
 
 ## Help
 
