@@ -1,9 +1,11 @@
 {
   "name": "snapwidget-agent",
   "private": true,
-  "type": "module",
   "scripts": {
     "references": "node scripts/references.mjs",
     "sync-app": "node scripts/sync-app.mjs"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

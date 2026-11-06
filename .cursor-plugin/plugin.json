@@ -1,7 +1,7 @@
 {
   "name": "snapwidget",
   "description": "Ask Cursor to add your Instagram feed or your Google reviews to your website. It makes the widget and puts it on your site for you.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "SnapWidget"
   },
