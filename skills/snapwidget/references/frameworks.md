@@ -1,6 +1,6 @@
 # SnapWidget code in a JavaScript framework
 
-The HTML code from `snapwidget embed <widget_id> --format html` has two parts:
+The HTML code from `snapwidget embed <widget_id> --format html` (the MCP tool `get_embed_code`) has two parts:
 
 - one or more `<script src="https://snapwidget.com/js/...">` tags (a popup or banner widget has a small inline script that loads one), and sometimes a `<link rel="stylesheet">`;
 - the widget itself: an `<iframe class="snapwidget-widget">`, or a `<div>` for a popup or banner widget.
@@ -11,9 +11,57 @@ A framework that renders the page with JavaScript does not run a `<script>` tag 
 
 `snapwidget embed <widget_id> --format react` gives a component that loads the scripts in `useEffect`. Save it and render it.
 
+With only the MCP tools, make the same component from the HTML code:
+
+```jsx
+'use client';
+
+import { useEffect } from 'react';
+
+const SCRIPTS = ['https://snapwidget.com/js/snapwidget.js']; // each src from the HTML code
+
+export default function SnapWidget() {
+  useEffect(() => {
+    for (const src of SCRIPTS) {
+      if (document.querySelector(`script[src="${src}"]`)) continue;
+      const script = document.createElement('script');
+      script.src = src;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  return (
+    <>
+      {/* the iframe from the HTML code, as JSX */}
+    </>
+  );
+}
+```
+
 ## Next.js
 
 `snapwidget embed <widget_id> --format next` gives a component that loads the scripts with `next/script`. It works in the App Router and the Pages Router.
+
+With only the MCP tools, make the same component from the HTML code:
+
+```jsx
+import Script from 'next/script';
+
+export default function SnapWidget() {
+  return (
+    <>
+      <Script src="https://snapwidget.com/js/snapwidget.js" strategy="afterInteractive" />
+      {/* the iframe from the HTML code, as JSX */}
+    </>
+  );
+}
+```
+
+## The iframe as JSX
+
+In React and Next.js, change the iframe's attributes: `class` becomes `className`, `frameborder` becomes `frameBorder`, and `style` becomes an object, such as `style={{ border: 'none', overflow: 'hidden', width: '100%' }}`. Leave out `allowtransparency`.
+
+The small inline script of a popup or banner widget has a `src` and an `id`. Load that `src`, and give the script that `id`: `script.id = id` in React, `<Script id="..." src="..." strategy="afterInteractive" />` in Next.js.
 
 ## Vue
 
