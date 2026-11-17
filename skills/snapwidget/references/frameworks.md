@@ -13,7 +13,7 @@ A framework that renders the page with JavaScript does not run a `<script>` tag 
 
 Or install the package `@snapwidget/react` and render `<SnapWidget widgetId="<widget_id>" />`. A review widget takes `reviewsId` in place of `widgetId`. When the HTML code has `snapwidget-lightbox` lines, add the `lightbox` prop. The package is for feed, grid and review widgets, not for popup and banner widgets.
 
-Load the script in `useEffect`, not in the `<head>` of the page. On a React page that the server renders, a script in the head starts the widget before React is ready, and the widget then starts twice.
+On a page that the server renders (Next.js, Base44), load the script in `useEffect`, or with `next/script` in the same component as the div. A script tag in the `<head>`, or `next/script` in the root layout, runs before React is ready: React reports a hydration error, and the widget can start twice. In a site that renders in the browser only (a Vite app), a script tag in the `<head>` of `index.html` is also correct.
 
 With only the MCP tools, make the same component from the HTML code:
 
