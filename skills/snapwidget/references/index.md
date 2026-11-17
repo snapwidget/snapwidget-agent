@@ -3,6 +3,7 @@
 Get the code with `snapwidget embed <widget_id> --format html` (the MCP tool get_embed_code), then follow the guide of the website builder. For React, Next.js, Vue, Nuxt, Svelte and Astro, read [frameworks.md](frameworks.md).
 
 - [How do I add an Instagram widget to an Astro site?](astro.md)
+- [How do I add an Instagram widget to my Base44 site?](base44.md)
 - [How do I add an Instagram widget to my Big Cartel website?](big-cartel.md)
 - [How do I add an Instagram widget to BigCommerce?](bigcommerce.md)
 - [How do I add an Instagram widget to my Blogger webpage or blog post?](blogger.md)
