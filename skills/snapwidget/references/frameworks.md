@@ -63,7 +63,7 @@ export default function SnapWidget() {
 
 ## The div as JSX
 
-In React and Next.js, change the div's attributes: `class` becomes `className`, and `style` becomes an object, such as `style={{ aspectRatio: '765/510' }}`. On an older code with an iframe, `frameborder` becomes `frameBorder` too, and leave out `allowtransparency`.
+In React and Next.js, change the div's attributes: `class` becomes `className`, and `style` becomes an object, such as `style={{ aspectRatio: '765/510' }}`. On an older code with an iframe, `frameborder` becomes `frameBorder` too, and leave out `allowtransparency`. If the iframe has no `allow` attribute, add `allow="autoplay; fullscreen"`, so a video can play in the widget.
 
 The small inline script of a popup or banner widget has a `src` and an `id`. Load that `src`, and give the script that `id`: `script.id = id` in React, `<Script id="..." src="..." strategy="afterInteractive" />` in Next.js.
 
